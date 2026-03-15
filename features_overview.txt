@@ -1,0 +1,46 @@
+Smart Tasks - Overview of Features, Logic, Flows, and UI
+
+1. Existing Core Features
+- User Authentication: Simulated login and registration pages with dynamic brand presentation.
+- Task Management: Create, edit, delete, and toggle completion status of tasks.
+- Gamification System: Earn XP, level up, maintain streaks, and unlock achievement badges based on user activity.
+- Pitch Mode: A "Demo Mode" toggle that populates the app with sample data, switches to a presentation-friendly theme, and triggers confetti animations for pitches.
+- Progress Tracking: Tracks daily completed tasks and weekly data visualization.
+
+2. Newly Added Feature Expansion
+- Command Palette (Ctrl+K): Global modal for "New Task", searching tasks, and toggling themes/modes.
+- Focus Mode (Pomodoro Timer): 25-minute countdown linked to tasks that awards a 1.5x XP multiplier when completed.
+- Skill Tree: RPG-style category leveling (Code, Fitness, etc.) with progressive SVG badges.
+- Productivity Heatmap: 52-week GitHub-style activity grid based on task completion timestamps.
+- Task Dependencies: Ability to block tasks until prerequisite tasks are completed (shows a Lock icon).
+- The Daily Boss Task: A high-stakes daily task with a pulsing orange ring that grants massive XP or gives a penalty if skipped.
+- Smart Batching: Filter views by category to focus on specific contextual tasks with a batch progress bar.
+- Dark Mode & "How It Works" Guide: Built-in dark theme toggle and an educational documentation page.
+- Unique Animated Logo: Custom SVG logo to improve the visual branding.
+
+3. Core Logic
+- State Management: Uses React 'useState' and 'useEffect' hooks to manage tasks, user stats (XP, level, streak), dialog states, and authentication status.
+- XP Calculation: Completing higher priority tasks yields more XP. Uncompleting a task deducts XP.
+- Leveling System: Users level up for every 100 XP gained.
+- Achievement Engine: Evaluates task counts and streak days to unlock specific badges (e.g., 'first-task', 'streak-7').
+- Conditional Rendering: The entire dashboard is protected by the `isAuthenticated` state; unauthenticated users see the `AuthPage`.
+
+4. Application Flows
+- Onboarding/Login Flow:
+  User lands on the application, logs in via AuthPage, and enters dashboard.
+- Task Completion Flow:
+  User toggles a task's checkbox. XP is added. A `RewardAnimation` triggers. Level and Badge states are re-evaluated.
+- Pitch Mode Flow:
+  Overrides all data with high-level demo content and switches theme.
+- Focus Timer Flow:
+  User starts timer on a task. Completing it inside the 25-minute window grants 1.5x XP multiplier.
+
+5. UI Architecture
+- Top Navigation Bar: Displays app branding with the new custom Logo, Cmd+K hint, How It Works link, Dark Mode toggle, Pitch Mode toggle, and Sign Out.
+- Main Dashboard: A 12-column ISO-aligned grid split into two primary areas:
+  - Left Column (Main Focus): Displays Batch toggle, "New Task" button, Heatmap, and `TaskList` component.
+  - Right Column (Analytics & Gamification): Displays the `FocusTimer`, `GamificationPanel`, `ProgressTracker`, and `SkillTree`.
+- Dialogs and Overlays:
+  - `AddTaskDialog`: A modal for creating and editing tasks with Boss and Dependency toggles.
+  - `CommandPalette`: A modal for quick search and actions.
+  - `Toaster` notifications.
